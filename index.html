@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yaşar Demirel - Günlük Bilgi Portalı</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background: #1d3557;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    section {
+      padding: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+    h2 {
+      color: #1d3557;
+    }
+    footer {
+      background: #1d3557;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>yasardemirel.netlify.app</h1>
+    <p>Günlük Bilgi, Haber ve Rehber Portalı</p>
+  </header>
+
+  <section class="grid">
+    <div>
+      <h2>Tarihte Bugün</h2>
+      <p>1937 – Edward VIII tahttan feragat etti.<br>1986 – Rafael Nadal doğdu.<br>Dünya Bisiklet Günü</p>
+    </div>
+    <div>
+      <h2>Günlük Burçlar</h2>
+      <p>Koç: Enerjin yüksek.<br>Boğa: Harcamalara dikkat.<br>İkizler: Yeni fırsatlar var...</p>
+    </div>
+    <div>
+      <h2>Döviz & Altın</h2>
+      <p>€: 34.20<br>$: 31.80<br>Gram Altın: 2500 TL</p>
+    </div>
+    <div>
+      <h2>Hava Durumu</h2>
+      <p>Amsterdam: 19°C - Parçalı bulutlu<br>Kayseri: 28°C - Güneşli</p>
+    </div>
+    <div>
+      <h2>Yol & Trafik</h2>
+      <p>Almanya - Avusturya sınırında yoğunluk var.<br>Edirne Kapıkule: Orta yoğunlukta.</p>
+    </div>
+    <div>
+      <h2>Otel Rehberi</h2>
+      <p>Bulgaria Park Otel – Sınırdan 30 dk mesafede<br>Konya Grand – Aile dostu, güvenli</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Komik Video</h2>
+    <video width="320" height="240" controls>
+      <source src="video.mp4" type="video/mp4" />
+      Tarayıcınız video etiketini desteklemiyor.
+    </video>
+  </section>
+
+  <section>
+    <h2>Tarihi Eser</h2>
+    <img src="kapadokya.jpg" alt="Kapadokya" width="100%">
+    <p>Kapadokya: Doğal Peri Bacaları ve yeraltı şehirleri ile meşhurdur.</p>
+  </section>
+
+  <audio autoplay loop>
+    <source src="klasik.mp3" type="audio/mpeg">
+    Tarayıcınız ses dosyasını desteklemiyor.
+  </audio>
+
+  <footer>
+    <p>&copy; 2025 yasardemirel.netlify.app | Tüm Hakları Saklıdır</p>
+  </footer>
+</body>
+</html>
