@@ -1,90 +1,108 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yaşar Demirel - Günlük Bilgi Portalı</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
   <style>
+    * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
       margin: 0;
-      padding: 0;
-      line-height: 1.6;
+      font-family: 'Rubik', sans-serif;
+      background: linear-gradient(135deg, #1d3557, #457b9d);
+      color: #f1faee;
     }
     header {
-      background: #1d3557;
-      color: white;
+      background: rgba(0, 0, 0, 0.6);
       padding: 20px;
       text-align: center;
-    }
-    section {
-      padding: 20px;
-      border-bottom: 1px solid #ccc;
-    }
-    h2 {
-      color: #1d3557;
-    }
-    footer {
-      background: #1d3557;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+      font-size: 2rem;
+      font-weight: bold;
+      border-bottom: 2px solid #f1faee;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #ffcc00;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      background: rgba(0,0,0,0.6);
+      border-top: 2px solid #f1faee;
+    }
+    section.video, section.gallery {
+      padding: 20px;
+      text-align: center;
+    }
+    video, img {
+      border-radius: 10px;
+      max-width: 100%;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>yasardemirel.netlify.app</h1>
-    <p>Günlük Bilgi, Haber ve Rehber Portalı</p>
+    yasardemirel.github.io – Günlük Bilgi Portalı
   </header>
 
   <section class="grid">
-    <div>
-      <h2>Tarihte Bugün</h2>
+    <div class="card">
+      <h2>📅 Tarihte Bugün</h2>
       <p>1937 – Edward VIII tahttan feragat etti.<br>1986 – Rafael Nadal doğdu.<br>Dünya Bisiklet Günü</p>
     </div>
-    <div>
-      <h2>Günlük Burçlar</h2>
+    <div class="card">
+      <h2>🔮 Günlük Burçlar</h2>
       <p>Koç: Enerjin yüksek.<br>Boğa: Harcamalara dikkat.<br>İkizler: Yeni fırsatlar var...</p>
     </div>
-    <div>
-      <h2>Döviz & Altın</h2>
+    <div class="card">
+      <h2>💱 Döviz & Altın</h2>
       <p>€: 34.20<br>$: 31.80<br>Gram Altın: 2500 TL</p>
     </div>
-    <div>
-      <h2>Hava Durumu</h2>
+    <div class="card">
+      <h2>🌦️ Hava Durumu</h2>
       <p>Amsterdam: 19°C - Parçalı bulutlu<br>Kayseri: 28°C - Güneşli</p>
     </div>
-    <div>
-      <h2>Yol & Trafik</h2>
+    <div class="card">
+      <h2>🛣️ Yol & Trafik</h2>
       <p>Almanya - Avusturya sınırında yoğunluk var.<br>Edirne Kapıkule: Orta yoğunlukta.</p>
     </div>
-    <div>
-      <h2>Otel Rehberi</h2>
+    <div class="card">
+      <h2>🏨 Otel Rehberi</h2>
       <p>Bulgaria Park Otel – Sınırdan 30 dk mesafede<br>Konya Grand – Aile dostu, güvenli</p>
     </div>
   </section>
 
-  <section>
-    <h2>Komik Video</h2>
+  <section class="video">
+    <h2>🎬 Komik Video</h2>
     <video width="320" height="240" controls>
       <source src="video.mp4" type="video/mp4" />
       Tarayıcınız video etiketini desteklemiyor.
     </video>
   </section>
 
-  <section>
-    <h2>Tarihi Eser</h2>
-    <img src="kapadokya.jpg" alt="Kapadokya" width="100%">
+  <section class="gallery">
+    <h2>🏛️ Tarihi Eser</h2>
+    <img src="kapadokya.jpg" alt="Kapadokya">
     <p>Kapadokya: Doğal Peri Bacaları ve yeraltı şehirleri ile meşhurdur.</p>
   </section>
 
@@ -94,7 +112,7 @@
   </audio>
 
   <footer>
-    <p>&copy; 2025 yasardemirel.netlify.app | Tüm Hakları Saklıdır</p>
+    &copy; 2025 yasardemirel.github.io | Hazırlayan: Yaşar Demirel
   </footer>
 </body>
 </html>
