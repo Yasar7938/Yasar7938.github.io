@@ -28,6 +28,21 @@
       }
     }
 
+    async function fetchTodayEvents() {
+      const today = new Date();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const url = `https://tr.wikipedia.org/api/rest_v1/feed/onthisday/events/${month}/${day}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const events = data.events.slice(0, 5).map(e => `• ${e.year} – ${e.text}`);
+        document.getElementById("tarihte-bugun").innerText = events.join("\n\n");
+      } catch {
+        document.getElementById("tarihte-bugun").innerText = "Veri alınamadı.";
+      }
+    }
+
     window.onload = () => {
       fetchDoviz();
       fetchWeather();
@@ -55,9 +70,9 @@
   <!-- Bilgi Kartları Bölümü -->
   <section id="bolumler" class="py-12 bg-gray-50">
     <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+      <div onclick="fetchTodayEvents()" class="cursor-pointer bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Tarihte Bugün</h3>
-        <p class="text-gray-600">Geçmişte bugün yaşanan önemli olayları öğrenin.</p>
+        <pre id="tarihte-bugun" class="text-gray-600 whitespace-pre-wrap">Tıklayınca bugünün olayları gösterilir.</pre>
       </div>
       <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Döviz & Altın</h3>
