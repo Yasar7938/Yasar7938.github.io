@@ -1,77 +1,97 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Yaşar Demirel | Anasayfa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
-    .section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    h2 { margin-top: 0; }
-  </style>
-</head>
-<body>
-  <h1>Yaşar Demirel | Güncel Bilgiler</h1>
-
-  <div class="section">
-    <h2>💰 Döviz ve Altın Kurları</h2>
-    <div id="doviz"></div>
-  </div>
-
-  <div class="section">
-    <h2>☁️ Hava Durumu</h2>
-    <div id="hava"></div>
-  </div>
-
-  <div class="section">
-    <h2>🕒 Yerel Saatler</h2>
-    <p>Kayseri Saati: <span id="kayseriClock"></span></p>
-    <p>Amsterdam Saati: <span id="amsClock"></span></p>
-  </div>
-
+  <title>Yaşar Demirel - Resmi Web Sitesi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Döviz ve Altın API - exchangerate.host
-    fetch("https://api.exchangerate.host/latest?base=USD&symbols=TRY,EUR")
-      .then(res => res.json())
-      .then(data => {
-        const usdtry = data.rates.TRY.toFixed(2);
-        const eurtry = data.rates.EUR.toFixed(2);
-        // Altın fiyatı sabit örnek, istersen gerçek altın API ekleyebiliriz
-        const gold = 2450;
-        document.getElementById("doviz").innerHTML = `
-          <p>USD/TRY: ${usdtry}</p>
-          <p>EUR/TRY: ${eurtry}</p>
-          <p>Gram Altın: ${gold} TL</p>
-        `;
-      });
-
-    // Hava Durumu - OpenWeatherMap API (örnek demo key)
-    const apiKey = "demo"; // Gerçek anahtarını eklemen gerekir
-    const cities = [
-      { name: "Kayseri", id: "745042" },
-      { name: "Amsterdam", id: "2759794" }
-    ];
-
-    cities.forEach(city => {
-      fetch(`https://api.openweathermap.org/data/2.5/weather?id=${city.id}&appid=${apiKey}&units=metric&lang=tr`)
-        .then(res => res.json())
-        .then(data => {
-          const html = `<p>${city.name}: ${data.main.temp}°C, ${data.weather[0].description}</p>`;
-          document.getElementById("hava").innerHTML += html;
-        });
-    });
-
-    // Yerel Saatler
-    function updateClocks() {
-      const kayseri = new Date().toLocaleTimeString("tr-TR", { timeZone: "Europe/Istanbul" });
-      const amsterdam = new Date().toLocaleTimeString("nl-NL", { timeZone: "Europe/Amsterdam" });
-      document.getElementById("kayseriClock").textContent = kayseri;
-      document.getElementById("amsClock").textContent = amsterdam;
+    async function fetchDoviz() {
+      try {
+        const res = await fetch("https://api.exchangerate.host/latest?base=EUR&symbols=TRY,USD");
+        const data = await res.json();
+        document.getElementById("doviz-data").innerText = `1 EUR = ${data.rates.TRY.toFixed(2)} TRY, 1 EUR = ${data.rates.USD.toFixed(2)} USD`;
+      } catch {
+        document.getElementById("doviz-data").innerText = "Veri alınamadı.";
+      }
     }
-    setInterval(updateClocks, 1000);
-    updateClocks();
-  </script>
 
+    async function fetchWeather() {
+      try {
+        const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=52.37&longitude=4.89&current_weather=true");
+        const data = await res.json();
+        const temp = data.current_weather.temperature;
+        document.getElementById("weather-data").innerText = `Amsterdam: ${temp}°C`;
+      } catch {
+        document.getElementById("weather-data").innerText = "Veri alınamadı.";
+      }
+    }
+
+    window.onload = () => {
+      fetchDoviz();
+      fetchWeather();
+    };
+  </script>
+</head>
+<body class="bg-gray-100 font-['Roboto']">
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white shadow-xl">
+    <div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
+      <h1 class="text-3xl font-bold">Yaşar Demirel</h1>
+      <p class="italic text-sm">Hollanda & Türkiye Güncel Bilgiler</p>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-white shadow-md py-12">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-4 text-gray-800">Gurbetçilerin Bilgi Kaynağı</h2>
+      <p class="text-gray-600 mb-6">Hollanda'dan haberler, Türkiye'den gelişmeler, yol haritaları, döviz kurları ve çok daha fazlası burada.</p>
+      <a href="#bolumler" class="bg-blue-700 text-white px-6 py-3 rounded-full shadow hover:bg-blue-800 transition">Hemen Keşfet</a>
+    </div>
+  </section>
+
+  <!-- Bilgi Kartları Bölümü -->
+  <section id="bolumler" class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Tarihte Bugün</h3>
+        <p class="text-gray-600">Geçmişte bugün yaşanan önemli olayları öğrenin.</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Döviz & Altın</h3>
+        <p id="doviz-data" class="text-gray-600">Yükleniyor...</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Hava Durumu</h3>
+        <p id="weather-data" class="text-gray-600">Yükleniyor...</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Yol & Trafik</h3>
+        <p class="text-gray-600">Avrupa'dan Türkiye'ye yol haritaları ve trafik durumu.</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Burç Yorumları</h3>
+        <p class="text-gray-600">Günlük burç yorumlarıyla ruh halinizi yakalayın.</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Gurbetçi Rehberi</h3>
+        <p class="text-gray-600">Hollanda'da yaşam, resmi işlemler, ipuçları.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Arka Plan Müziği -->
+  <audio autoplay loop hidden>
+    <source src="audio/soft-classical.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Footer -->
+  <footer class="bg-indigo-900 text-white py-6 mt-12">
+    <div class="max-w-6xl mx-auto px-6 text-center text-sm">
+      &copy; 2025 Yaşar Demirel. Tüm hakları saklıdır.
+    </div>
+  </footer>
 </body>
 </html>
