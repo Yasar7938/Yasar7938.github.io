@@ -2,117 +2,76 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yaşar Demirel - Günlük Bilgi Portalı</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Yaşar Demirel | Anasayfa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Rubik', sans-serif;
-      background: linear-gradient(135deg, #1d3557, #457b9d);
-      color: #f1faee;
-    }
-    header {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      border-bottom: 2px solid #f1faee;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    h2 {
-      margin-top: 0;
-      font-size: 1.5rem;
-      color: #ffcc00;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9rem;
-      background: rgba(0,0,0,0.6);
-      border-top: 2px solid #f1faee;
-    }
-    section.video, section.gallery {
-      padding: 20px;
-      text-align: center;
-    }
-    video, img {
-      border-radius: 10px;
-      max-width: 100%;
-    }
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    h2 { margin-top: 0; }
   </style>
 </head>
 <body>
-  <header>
-    yasardemirel.github.io – Günlük Bilgi Portalı
-  </header>
+  <h1>Yaşar Demirel | Güncel Bilgiler</h1>
 
-  <section class="grid">
-    <div class="card">
-      <h2>📅 Tarihte Bugün</h2>
-      <p>1937 – Edward VIII tahttan feragat etti.<br>1986 – Rafael Nadal doğdu.<br>Dünya Bisiklet Günü</p>
-    </div>
-    <div class="card">
-      <h2>🔮 Günlük Burçlar</h2>
-      <p>Koç: Enerjin yüksek.<br>Boğa: Harcamalara dikkat.<br>İkizler: Yeni fırsatlar var...</p>
-    </div>
-    <div class="card">
-      <h2>💱 Döviz & Altın</h2>
-      <p>€: 34.20<br>$: 31.80<br>Gram Altın: 2500 TL</p>
-    </div>
-    <div class="card">
-      <h2>🌦️ Hava Durumu</h2>
-      <p>Amsterdam: 19°C - Parçalı bulutlu<br>Kayseri: 28°C - Güneşli</p>
-    </div>
-    <div class="card">
-      <h2>🛣️ Yol & Trafik</h2>
-      <p>Almanya - Avusturya sınırında yoğunluk var.<br>Edirne Kapıkule: Orta yoğunlukta.</p>
-    </div>
-    <div class="card">
-      <h2>🏨 Otel Rehberi</h2>
-      <p>Bulgaria Park Otel – Sınırdan 30 dk mesafede<br>Konya Grand – Aile dostu, güvenli</p>
-    </div>
-  </section>
+  <div class="section">
+    <h2>💰 Döviz ve Altın Kurları</h2>
+    <div id="doviz"></div>
+  </div>
 
-  <section class="video">
-    <h2>🎬 Komik Video</h2>
-    <video width="320" height="240" controls>
-      <source src="video.mp4" type="video/mp4" />
-      Tarayıcınız video etiketini desteklemiyor.
-    </video>
-  </section>
+  <div class="section">
+    <h2>☁️ Hava Durumu</h2>
+    <div id="hava"></div>
+  </div>
 
-  <section class="gallery">
-    <h2>🏛️ Tarihi Eser</h2>
-    <img src="kapadokya.jpg" alt="Kapadokya">
-    <p>Kapadokya: Doğal Peri Bacaları ve yeraltı şehirleri ile meşhurdur.</p>
-  </section>
+  <div class="section">
+    <h2>🕒 Yerel Saatler</h2>
+    <p>Kayseri Saati: <span id="kayseriClock"></span></p>
+    <p>Amsterdam Saati: <span id="amsClock"></span></p>
+  </div>
 
-  <audio autoplay loop>
-    <source src="klasik.mp3" type="audio/mpeg">
-    Tarayıcınız ses dosyasını desteklemiyor.
-  </audio>
+  <script>
+    // Döviz ve Altın API - exchangerate.host
+    fetch("https://api.exchangerate.host/latest?base=USD&symbols=TRY,EUR")
+      .then(res => res.json())
+      .then(data => {
+        const usdtry = data.rates.TRY.toFixed(2);
+        const eurtry = data.rates.EUR.toFixed(2);
+        // Altın fiyatı sabit örnek, istersen gerçek altın API ekleyebiliriz
+        const gold = 2450;
+        document.getElementById("doviz").innerHTML = `
+          <p>USD/TRY: ${usdtry}</p>
+          <p>EUR/TRY: ${eurtry}</p>
+          <p>Gram Altın: ${gold} TL</p>
+        `;
+      });
 
-  <footer>
-    &copy; 2025 yasardemirel.github.io | Hazırlayan: Yaşar Demirel
-  </footer>
+    // Hava Durumu - OpenWeatherMap API (örnek demo key)
+    const apiKey = "demo"; // Gerçek anahtarını eklemen gerekir
+    const cities = [
+      { name: "Kayseri", id: "745042" },
+      { name: "Amsterdam", id: "2759794" }
+    ];
+
+    cities.forEach(city => {
+      fetch(`https://api.openweathermap.org/data/2.5/weather?id=${city.id}&appid=${apiKey}&units=metric&lang=tr`)
+        .then(res => res.json())
+        .then(data => {
+          const html = `<p>${city.name}: ${data.main.temp}°C, ${data.weather[0].description}</p>`;
+          document.getElementById("hava").innerHTML += html;
+        });
+    });
+
+    // Yerel Saatler
+    function updateClocks() {
+      const kayseri = new Date().toLocaleTimeString("tr-TR", { timeZone: "Europe/Istanbul" });
+      const amsterdam = new Date().toLocaleTimeString("nl-NL", { timeZone: "Europe/Amsterdam" });
+      document.getElementById("kayseriClock").textContent = kayseri;
+      document.getElementById("amsClock").textContent = amsterdam;
+    }
+    setInterval(updateClocks, 1000);
+    updateClocks();
+  </script>
+
 </body>
 </html>
