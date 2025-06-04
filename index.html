@@ -9,9 +9,9 @@
   <script>
     async function fetchDoviz() {
       try {
-        const res = await fetch("https://api.exchangerate.host/latest?base=EUR&symbols=TRY,USD");
+        const res = await fetch("https://api.exchangerate.host/latest?base=EUR&symbols=TRY,USD,GBP");
         const data = await res.json();
-        document.getElementById("doviz-data").innerText = `1 EUR = ${data.rates.TRY.toFixed(2)} TRY, 1 EUR = ${data.rates.USD.toFixed(2)} USD`;
+        document.getElementById("doviz-data").innerText = `1 EUR = ${data.rates.TRY.toFixed(2)} TRY\n1 EUR = ${data.rates.USD.toFixed(2)} USD\n1 EUR = ${data.rates.GBP.toFixed(2)} GBP`;
       } catch {
         document.getElementById("doviz-data").innerText = "Veri alınamadı.";
       }
@@ -43,6 +43,18 @@
       }
     }
 
+    async function fetchHoroscope() {
+      document.getElementById("burc-data").innerText = "Koç: Bugün enerjiniz yüksek. Yeni başlangıçlar için ideal bir gün. (örnek içerik)";
+    }
+
+    async function fetchTrafficInfo() {
+      document.getElementById("trafik-data").innerText = "Hollanda - Almanya rotasında trafik yoğunluğu yok. Türkiye otoyollarında akış normal. (örnek)";
+    }
+
+    async function fetchGuide() {
+      document.getElementById("rehber-data").innerText = "Hollanda'da oturum başvurusu için IND web sitesinden randevu almanız gerekmektedir. (örnek rehber)";
+    }
+
     window.onload = () => {
       fetchDoviz();
       fetchWeather();
@@ -50,7 +62,6 @@
   </script>
 </head>
 <body class="bg-gray-100 font-['Roboto']">
-  <!-- Header -->
   <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white shadow-xl">
     <div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
       <h1 class="text-3xl font-bold">Yaşar Demirel</h1>
@@ -58,7 +69,6 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
   <section class="bg-white shadow-md py-12">
     <div class="max-w-5xl mx-auto px-6 text-center">
       <h2 class="text-4xl font-bold mb-4 text-gray-800">Gurbetçilerin Bilgi Kaynağı</h2>
@@ -67,7 +77,6 @@
     </div>
   </section>
 
-  <!-- Bilgi Kartları Bölümü -->
   <section id="bolumler" class="py-12 bg-gray-50">
     <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div onclick="fetchTodayEvents()" class="cursor-pointer bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
@@ -76,33 +85,31 @@
       </div>
       <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Döviz & Altın</h3>
-        <p id="doviz-data" class="text-gray-600">Yükleniyor...</p>
+        <pre id="doviz-data" class="text-gray-600 whitespace-pre-wrap">Yükleniyor...</pre>
       </div>
       <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Hava Durumu</h3>
         <p id="weather-data" class="text-gray-600">Yükleniyor...</p>
       </div>
-      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+      <div onclick="fetchTrafficInfo()" class="cursor-pointer bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Yol & Trafik</h3>
-        <p class="text-gray-600">Avrupa'dan Türkiye'ye yol haritaları ve trafik durumu.</p>
+        <pre id="trafik-data" class="text-gray-600 whitespace-pre-wrap">Tıklayınca trafik bilgisi gösterilir.</pre>
       </div>
-      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+      <div onclick="fetchHoroscope()" class="cursor-pointer bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Burç Yorumları</h3>
-        <p class="text-gray-600">Günlük burç yorumlarıyla ruh halinizi yakalayın.</p>
+        <pre id="burc-data" class="text-gray-600 whitespace-pre-wrap">Tıklayınca bugünkü yorum gösterilir.</pre>
       </div>
-      <div class="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+      <div onclick="fetchGuide()" class="cursor-pointer bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Gurbetçi Rehberi</h3>
-        <p class="text-gray-600">Hollanda'da yaşam, resmi işlemler, ipuçları.</p>
+        <pre id="rehber-data" class="text-gray-600 whitespace-pre-wrap">Tıklayınca rehber bilgisi gösterilir.</pre>
       </div>
     </div>
   </section>
 
-  <!-- Arka Plan Müziği -->
   <audio autoplay loop hidden>
     <source src="soft-classical.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Footer -->
   <footer class="bg-indigo-900 text-white py-6 mt-12">
     <div class="max-w-6xl mx-auto px-6 text-center text-sm">
       &copy; 2025 Yaşar Demirel. Tüm hakları saklıdır.
